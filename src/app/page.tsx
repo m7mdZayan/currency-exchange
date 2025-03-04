@@ -1,5 +1,3 @@
 export default function Home() {
-  return (
-    <div></div>
-  );
+  return <div className="bg-background-3 text-danger">test</div>;
 }
