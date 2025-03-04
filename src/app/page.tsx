@@ -1,4 +1,5 @@
 import CurrencyTable from "./components/CurrencyTable";
+import CurrencyConverter from "./components/currencyConverter";
 
 type ExchangeRates = {
   [key: string]: number;
@@ -11,7 +12,8 @@ export default async function Home() {
   const data: { rates: ExchangeRates } = await res.json();
 
   return (
-    <div className="">
+    <div className="container mx-auto max-w-[750px]">
+      <CurrencyConverter rates={data.rates} />
       <CurrencyTable rates={data.rates} />
     </div>
   );

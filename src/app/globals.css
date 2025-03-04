@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background-1: #171717;
-  --background-2: #252728;
-  --background-3: #333334;
+  /* --background-1: #171717; */
+  --background-1: #fff;
+
+  /* --background-2: #252728; */
+  /* --background-3: #333334; */
   --text-light-1: #fff;
-  --text-light-2: #aeb1b6;
+  /* --text-light-2: #aeb1b6; */
   --danger: #dc3545;
   --primary: #0866ff;
 }
@@ -19,7 +21,15 @@
   --color-primary: var(--primary);
 }
 body {
-  background: var(--background-1);
-  color: var(--text-light-1);
+  /* background: var(--background-1); */
+  /* color: var(--text-light-1); */
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* override MUI Style */
+.MuiInputBase-input.MuiOutlinedInput-input {
+  color: var(--text-light-2);
+}
+.MuiFormControl-root fieldset {
+  border-color: var(--text-light-2);
 }

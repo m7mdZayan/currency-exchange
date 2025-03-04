@@ -2,6 +2,20 @@
 
 import React from "react";
 import { useState } from "react";
+import {
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  InputAdornment,
+  TableSortLabel,
+  Button,
+} from "@mui/material";
 
 type ExchangeRates = {
   [key: string]: number;
@@ -13,63 +27,87 @@ interface ICurrencyTable {
 
 const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
   const [search, setSearch] = useState("");
-  const [amount, setAmount] = useState(1);
-  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
+  const [sortBy, setSortBy] = useState<"code" | "rate">("code");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  const filteredRates = Object.entries(rates).filter(([code]) =>
-    code.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredRates = Object.entries(rates)
+    .filter(([code]) => code.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      const [keyA, valueA] = a;
+      const [keyB, valueB] = b;
+
+      if (sortBy === "code") {
+        return sortOrder === "asc"
+          ? keyA.localeCompare(keyB)
+          : keyB.localeCompare(keyA);
+      } else {
+        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+      }
+    });
+
+  const handleSort = (column: "code" | "rate") => {
+    setSortBy(column);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
+  const resetSorting = () => {
+    setSortBy("code");
+    setSortOrder("asc");
+  };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Currency Exchange Rates</h1>
+    <div className="my-4">
+      <Typography variant="h4" gutterBottom>
+        Currency Exchange Rates
+      </Typography>
 
-      <input
-        type="text"
-        placeholder="Filter by currency code"
+      <TextField
+        label="Filter by currency code"
+        variant="outlined"
+        fullWidth
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        margin="normal"
       />
 
-      <div>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-        />
-        <select
-          value={selectedCurrency}
-          onChange={(e) => setSelectedCurrency(e.target.value)}
-        >
-          {Object.keys(rates).map((code) => (
-            <option key={code} value={code}>
-              {code}
-            </option>
-          ))}
-        </select>
-        <p>
-          Converted: {amount * (rates[selectedCurrency] || 0)}{" "}
-          {selectedCurrency}
-        </p>
-      </div>
+      <Button variant="outlined" color="secondary" onClick={resetSorting}>
+        Reset Sorting
+      </Button>
 
-      {/* Exchange Rate Table */}
-      <table>
-        <thead>
-          <tr>
-            <th>Currency</th>
-            <th>Exchange Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredRates.map(([code, rate]) => (
-            <tr key={code}>
-              <td>{code}</td>
-              <td>{rate}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel
+                  active={sortBy === "code"}
+                  direction={sortOrder}
+                  onClick={() => handleSort("code")}
+                >
+                  Currency
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortBy === "rate"}
+                  direction={sortOrder}
+                  onClick={() => handleSort("rate")}
+                >
+                  Exchange Rate
+                </TableSortLabel>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredRates.map(([code, rate]) => (
+              <TableRow key={code}>
+                <TableCell>{code}</TableCell>
+                <TableCell>{rate}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
