@@ -12,9 +12,9 @@ import {
   TableRow,
   Paper,
   Typography,
-  InputAdornment,
   TableSortLabel,
   Button,
+  TablePagination,
 } from "@mui/material";
 
 type ExchangeRates = {
@@ -25,10 +25,14 @@ interface ICurrencyTable {
   rates: ExchangeRates;
 }
 
+const rowsPerPageOptions = [5, 10, 25];
+
 const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"code" | "rate">("code");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(0);
 
   const filteredRates = Object.entries(rates)
     .filter(([code]) => code.toLowerCase().includes(search.toLowerCase()))
@@ -55,24 +59,35 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
     setSortOrder("asc");
   };
 
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div className="my-4">
       <Typography variant="h4" gutterBottom>
-        Currency Exchange Rates
+        Currency Exchange Rates Table
       </Typography>
+      <div className="flex justify-between items-center mb-2">
+        <TextField
+          label="Filter by currency code"
+          variant="outlined"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          margin="normal"
+        />
 
-      <TextField
-        label="Filter by currency code"
-        variant="outlined"
-        fullWidth
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        margin="normal"
-      />
-
-      <Button variant="outlined" color="secondary" onClick={resetSorting}>
-        Reset Sorting
-      </Button>
+        <Button variant="outlined" color="secondary" onClick={resetSorting}>
+          Reset Sorting
+        </Button>
+      </div>
 
       <TableContainer component={Paper}>
         <Table>
@@ -99,15 +114,27 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRates.map(([code, rate]) => (
-              <TableRow key={code}>
-                <TableCell>{code}</TableCell>
-                <TableCell>{rate}</TableCell>
-              </TableRow>
-            ))}
+            {filteredRates
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(([code, rate]) => (
+                <TableRow key={code}>
+                  <TableCell>{code}</TableCell>
+                  <TableCell>{rate}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <TablePagination
+        rowsPerPageOptions={rowsPerPageOptions}
+        component="div"
+        count={filteredRates.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

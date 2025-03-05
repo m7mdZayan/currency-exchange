@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import CurrencyTable from "./components/CurrencyTable";
 import CurrencyConverter from "./components/currencyConverter";
 
@@ -14,6 +15,7 @@ export default async function Home() {
   return (
     <div className="container mx-auto max-w-[750px]">
       <CurrencyConverter rates={data.rates} />
+      <Divider></Divider>
       <CurrencyTable rates={data.rates} />
     </div>
   );
