@@ -1,9 +1,6 @@
 import CurrencyContainer from "./components/currencyContainer";
 import CustomThemeProvider from "./components/themeProvider";
-
-type ExchangeRates = {
-  [key: string]: number;
-};
+import { ExchangeRates } from "./utils/types";
 
 export default async function Home() {
   const res = await fetch("https://api.exchangerate-api.com/v4/latest/USD", {

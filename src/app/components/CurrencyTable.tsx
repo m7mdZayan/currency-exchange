@@ -16,6 +16,7 @@ import {
   Button,
   TablePagination,
 } from "@mui/material";
+import { rowsPerPageOptions } from "../utils/data";
 
 type ExchangeRates = {
   [key: string]: number;
@@ -24,8 +25,6 @@ type ExchangeRates = {
 interface ICurrencyTable {
   rates: ExchangeRates;
 }
-
-const rowsPerPageOptions = [5, 10, 25];
 
 const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
   const [search, setSearch] = useState("");

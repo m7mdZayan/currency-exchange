@@ -5,13 +5,10 @@ import { Divider } from "@mui/material";
 import CurrencyConverter from "./currencyConverter";
 import CurrencyTable from "./currencyTable";
 import CountdownProgress from "./countdownProgress";
+import { ExchangeRates } from "../utils/types";
+import { POLLING_INTERVAL } from "../utils/data";
 
 const API_URL = "https://api.exchangerate-api.com/v4/latest/USD";
-const POLLING_INTERVAL = 60000; // 60 seconds
-
-type ExchangeRates = {
-  [key: string]: number;
-};
 
 interface CurrencyContainerProps {
   initialRates: ExchangeRates;

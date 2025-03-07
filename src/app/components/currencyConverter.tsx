@@ -9,10 +9,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
-
-type ExchangeRates = {
-  [key: string]: number;
-};
+import { ExchangeRates } from "../types";
 
 interface ICurrencyConverter {
   rates: ExchangeRates;
