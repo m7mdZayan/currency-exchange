@@ -45,7 +45,7 @@ const CurrencyContainer: React.FC<CurrencyContainerProps> = ({
   }, []);
 
   return (
-    <div className="container mx-auto max-w-[750px]">
+    <div className="container mx-auto max-w-[750px] py-4">
       <CountdownProgress timeLeft={timeLeft} />
       <CurrencyConverter rates={rates} />
       <Divider sx={{ my: 2 }} />

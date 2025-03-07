@@ -15,6 +15,7 @@ import {
   TableSortLabel,
   Button,
   TablePagination,
+  Card,
 } from "@mui/material";
 import { rowsPerPageOptions } from "../utils/data";
 
@@ -70,7 +71,7 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
   };
 
   return (
-    <div className="my-4">
+    <Card className="p-5 my-2" sx={{ borderRadius: "10px" }}>
       <Typography variant="h4" gutterBottom>
         Currency Exchange Rates Table
       </Typography>
@@ -134,7 +135,7 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </div>
+    </Card>
   );
 };
 

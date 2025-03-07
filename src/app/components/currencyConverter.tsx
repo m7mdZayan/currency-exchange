@@ -7,9 +7,10 @@ import {
   MenuItem,
   Typography,
   InputAdornment,
+  Card,
 } from "@mui/material";
 import { useState } from "react";
-import { ExchangeRates } from "../types";
+import { ExchangeRates } from "../utils/types";
 
 interface ICurrencyConverter {
   rates: ExchangeRates;
@@ -20,7 +21,7 @@ const CurrencyConverter: React.FC<ICurrencyConverter> = ({ rates }) => {
   const [selectedCurrency, setSelectedCurrency] = useState("EUR");
 
   return (
-    <>
+    <Card className="p-5 my-2" sx={{ borderRadius: "10px" }}>
       <Typography variant="h4" sx={{ margin: "1rem 0 2rem" }}>
         Currency Converter
       </Typography>
@@ -63,7 +64,7 @@ const CurrencyConverter: React.FC<ICurrencyConverter> = ({ rates }) => {
         {amount} USD is equal to {amount * (rates[selectedCurrency] || 0)}{" "}
         {selectedCurrency}
       </Typography>
-    </>
+    </Card>
   );
 };
 
