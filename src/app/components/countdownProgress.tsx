@@ -7,7 +7,7 @@ interface ICountdownProgress {
 
 const CountdownProgress: React.FC<ICountdownProgress> = ({ timeLeft }) => {
   return (
-    <div className="flex items-center gap-2 justify-center pt-2 pb-4">
+    <div className="flex items-center gap-2 justify-start pt-2 pb-4">
       <Typography variant="body2" color="textSecondary" gutterBottom>
         Data will be updated in
       </Typography>

@@ -1,4 +1,5 @@
 import CurrencyContainer from "./components/currencyContainer";
+import CustomThemeProvider from "./components/themeProvider";
 
 type ExchangeRates = {
   [key: string]: number;
@@ -11,8 +12,10 @@ export default async function Home() {
   const data: { rates: ExchangeRates } = await res.json();
 
   return (
-    <div className="container mx-auto max-w-[750px]">
-      <CurrencyContainer initialRates={data.rates} />
-    </div>
+    <CustomThemeProvider>
+      <div className="container mx-auto max-w-[750px]">
+        <CurrencyContainer initialRates={data.rates} />
+      </div>
+    </CustomThemeProvider>
   );
 }
