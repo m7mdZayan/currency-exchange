@@ -1,4 +1,4 @@
-import CurrencyContainer from "./components/urrencyContainer";
+import CurrencyContainer from "./components/currencyContainer";
 
 type ExchangeRates = {
   [key: string]: number;
