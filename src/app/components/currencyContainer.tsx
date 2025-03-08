@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Divider, SnackbarCloseReason } from "@mui/material";
 import CurrencyConverter from "./currencyConverter";
-import CurrencyTable from "./currencyTable";
+import CurrencyTable from "./CurrencyTable";
 import CountdownProgress from "./countdownProgress";
 import { ExchangeRates } from "../utils/types";
 import { POLLING_INTERVAL } from "../utils/data";
