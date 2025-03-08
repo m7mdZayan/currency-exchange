@@ -3,7 +3,7 @@ import CustomThemeProvider from "./components/themeProvider";
 import { ExchangeRates } from "./utils/types";
 
 export default async function Home() {
-  const res = await fetch("https://api.exchangerate-api.com/v4/latest/USD", {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL as string, {
     cache: "no-store", // Ensures fresh data on each request
   });
   const data: { rates: ExchangeRates } = await res.json();

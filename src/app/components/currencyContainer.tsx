@@ -8,8 +8,6 @@ import CountdownProgress from "./countdownProgress";
 import { ExchangeRates } from "../utils/types";
 import { POLLING_INTERVAL } from "../utils/data";
 
-const API_URL = "https://api.exchangerate-api.com/v4/latest/USD";
-
 interface CurrencyContainerProps {
   initialRates: ExchangeRates;
 }
@@ -23,7 +21,7 @@ const CurrencyContainer: React.FC<CurrencyContainerProps> = ({
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL as string);
         const data = await response.json();
         setRates(data.rates);
       } catch (error) {
