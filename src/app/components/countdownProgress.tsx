@@ -1,5 +1,6 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import React from "react";
+import { POLLING_INTERVAL } from "../utils/data";
 
 interface ICountdownProgress {
   timeLeft: number;
@@ -12,7 +13,10 @@ const CountdownProgress: React.FC<ICountdownProgress> = ({ timeLeft }) => {
         Data will be updated in
       </Typography>
       <Box sx={{ position: "relative", display: "inline-flex" }}>
-        <CircularProgress variant="determinate" value={(timeLeft / 60) * 100} />
+        <CircularProgress
+          variant="determinate"
+          value={((timeLeft * 1000) / POLLING_INTERVAL) * 100}
+        />
         <Box className="absolute flex items-center justify-center inset-0">
           <Typography variant="body2" color="textSecondary">
             {timeLeft}

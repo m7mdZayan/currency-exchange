@@ -1,18 +1,16 @@
 import CurrencyContainer from "./components/currencyContainer";
-import CustomThemeProvider from "./components/themeProvider";
-import { ExchangeRates } from "./utils/types";
+import { fetchExchangeRates } from "./utils/api";
 
 export default async function Home() {
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL as string, {
-    cache: "no-store", // Ensures fresh data on each request
-  });
-  const data: { rates: ExchangeRates } = await res.json();
+  const rates = await fetchExchangeRates();
+
+  if (!rates) {
+    throw new Error("Failed to load exchange rates. Please try again later.");
+  } // throw error to show the error.tsx page
 
   return (
-    <CustomThemeProvider>
-      <div className="container mx-auto max-w-[750px]">
-        <CurrencyContainer initialRates={data.rates} />
-      </div>
-    </CustomThemeProvider>
+    <div className="container mx-auto max-w-[750px]">
+      <CurrencyContainer initialRates={rates} />
+    </div>
   );
 }
