@@ -36,7 +36,7 @@ const CustomThemeProvider: React.FC<ICustomThemeProvider> = ({ children }) => {
           onClick={toggleTheme}
           sx={{
             position: "absolute",
-            top: 10,
+            top: 25,
             right: 10,
             color: "inherit",
           }}

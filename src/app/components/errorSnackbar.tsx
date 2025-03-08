@@ -16,23 +16,21 @@ const ErrorSnackbar: React.FC<IErrorSnackbarProps> = ({
   handleCloseSnackbar,
 }) => {
   return (
-    <div className="container mx-auto max-w-[750px] py-4">
-      <Snackbar
-        open={showSnackbar}
-        autoHideDuration={6000}
+    <Snackbar
+      open={showSnackbar}
+      autoHideDuration={6000}
+      onClose={handleCloseSnackbar}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <Alert
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        severity="error"
+        variant="filled"
+        sx={{ width: "100%" }}
       >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity="error"
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          There was an error in updating data !
-        </Alert>
-      </Snackbar>
-    </div>
+        There was an error in updating data !
+      </Alert>
+    </Snackbar>
   );
 };
 

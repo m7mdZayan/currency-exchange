@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Divider, SnackbarCloseReason } from "@mui/material";
 import CurrencyConverter from "./currencyConverter";
 import CurrencyTable from "./currencyTable";
@@ -19,7 +19,6 @@ const CurrencyContainer: React.FC<ICurrencyContainerProps> = ({
 }) => {
   const [rates, setRates] = useState<ExchangeRates>(initialRates);
   const [timeLeft, setTimeLeft] = useState(POLLING_INTERVAL / 1000);
-  const [error, setError] = useState<string | null>(null);
   const [showSnackbar, setShowSnackbar] = React.useState(false);
 
   const handleCloseSnackbar = (
@@ -33,36 +32,29 @@ const CurrencyContainer: React.FC<ICurrencyContainerProps> = ({
     setShowSnackbar(false);
   };
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      const updatedRates = await fetchExchangeRates();
-      if (updatedRates) {
-        setRates(updatedRates);
-        setError(null); // Clear any previous errors
-      } else {
-        setError("Failed to update exchange rates.");
-      }
-      setTimeLeft(POLLING_INTERVAL / 1000);
-    };
-
-    fetchRates();
-    const interval = setInterval(fetchRates, POLLING_INTERVAL);
-    const countdown = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(countdown);
-    };
+  const fetchRates = useCallback(async () => {
+    const updatedRates = await fetchExchangeRates();
+    if (updatedRates) {
+      setRates(updatedRates);
+      setShowSnackbar(false);
+    } else {
+      setShowSnackbar(true);
+    }
+    setTimeLeft(POLLING_INTERVAL / 1000);
   }, []);
 
   useEffect(() => {
-    if (error) {
-      setShowSnackbar(true);
-      setError(null);
-    }
-  }, [error]);
+    fetchRates();
+    const updateDataInterval = setInterval(fetchRates, POLLING_INTERVAL); // fetch data every POLLING_INTERVAL (now60 seconds )
+    const countdown = setInterval(() => {
+      setTimeLeft((prev) => (prev > 1 ? prev - 1 : POLLING_INTERVAL / 1000));
+    }, 1000); // update countdown every second to inform the user when the data will be updated
+
+    return () => {
+      clearInterval(updateDataInterval);
+      clearInterval(countdown);
+    };
+  }, [fetchRates]);
 
   return (
     <div className="container mx-auto max-w-[750px] py-4">

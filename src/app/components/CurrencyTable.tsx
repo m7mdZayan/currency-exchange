@@ -18,10 +18,7 @@ import {
   Card,
 } from "@mui/material";
 import { rowsPerPageOptions } from "../utils/data";
-
-type ExchangeRates = {
-  [key: string]: number;
-};
+import { ExchangeRates } from "../utils/types";
 
 interface ICurrencyTable {
   rates: ExchangeRates;
@@ -98,6 +95,7 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
                   active={sortBy === "code"}
                   direction={sortOrder}
                   onClick={() => handleSort("code")}
+                  aria-label="Sort by currency code"
                 >
                   Currency
                 </TableSortLabel>
@@ -107,6 +105,7 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
                   active={sortBy === "rate"}
                   direction={sortOrder}
                   onClick={() => handleSort("rate")}
+                  aria-label="Sort by exchange rate"
                 >
                   Exchange Rate
                 </TableSortLabel>

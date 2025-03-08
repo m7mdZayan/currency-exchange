@@ -46,6 +46,7 @@ const CurrencyConverter: React.FC<ICurrencyConverter> = ({ rates }) => {
           <Select
             value={selectedCurrency}
             onChange={(e) => setSelectedCurrency(e.target.value)}
+            aria-label="Select currency"
           >
             {Object.keys(rates).map((code) => (
               <MenuItem key={code} value={code}>
@@ -57,7 +58,7 @@ const CurrencyConverter: React.FC<ICurrencyConverter> = ({ rates }) => {
       </div>
       <Typography
         className={`text-center md:text-start ${
-          amount > 0 && rates[selectedCurrency] ? "" : "invisible"
+          amount > 0 && rates[selectedCurrency] ? "" : "invisible" // only show the result if the amount is greater than 0 and the selected currency is available in the rates
         }`}
         sx={{ marginBlock: "1rem", fontSize: "1.2rem" }}
       >

@@ -12,7 +12,7 @@ const CountdownProgress: React.FC<ICountdownProgress> = ({ timeLeft }) => {
       <Typography variant="body2" color="textSecondary" gutterBottom>
         Data will be updated in
       </Typography>
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <Box className="relative inline-flex">
         <CircularProgress
           variant="determinate"
           value={((timeLeft * 1000) / POLLING_INTERVAL) * 100}
