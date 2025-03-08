@@ -72,7 +72,7 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
       <Typography variant="h4" gutterBottom>
         Currency Exchange Rates Table
       </Typography>
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex flex-col md:flex-row gap-3 justify-between items-center mb-2">
         <TextField
           label="Filter by currency code"
           variant="outlined"
@@ -80,7 +80,6 @@ const CurrencyTable: React.FC<ICurrencyTable> = ({ rates }) => {
           onChange={(e) => setSearch(e.target.value)}
           margin="normal"
         />
-
         <Button variant="outlined" color="secondary" onClick={resetSorting}>
           Reset Sorting
         </Button>
