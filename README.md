@@ -60,7 +60,7 @@ we will show a snackbar to tell the user that the data is not updated but the ap
 
 ## Extending this dashboard (bonus)
 
-1- we can add functions to the utils/api.ts file to get the crypto & stock exchange rates
-2- if we didn't use MUI so we could make a shared table component to be used to show different types of data.
-3- but as it's already a shared component we don't need it.
-4- but we can make filter & sorting functions sharable to use them there also.
+- we can add functions to the utils/api.ts file to get the crypto & stock exchange rates
+- if we didn't use MUI so we could make a shared table component to be used to show different types of data.
+- but as it's already a shared component we don't need it.
+- but we can make filter & sorting functions shared to use them there also.
